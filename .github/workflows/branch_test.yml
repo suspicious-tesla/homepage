@@ -13,15 +13,15 @@ jobs:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Set env to staging
         if: ! endsWith(github.ref, '/master')
-        run: |
-        echo "ENV=dev" >> $GITHUB_ENV
+        run: echo "ENV=dev" >> $GITHUB_ENV
+
       - name: Set env to production
         if: endsWith(github.ref, '/master')
-        run: |
-        echo "ENV=prd" >> $GITHUB_ENV
-      - name: Echo $ENV
+        run: echo "ENV=prd" >> $GITHUB_ENV
+
+      - name: Echo env
         if: endsWith(github.ref, '/master')
-        run: |
-        echo $ENV
+        run: echo $ENV
