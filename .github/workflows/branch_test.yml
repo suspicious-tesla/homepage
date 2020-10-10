@@ -22,6 +22,10 @@ jobs:
         if: endsWith(github.ref, '/master')
         run: echo "ENV=prd" >> $GITHUB_ENV
 
+      - name: Echo homepage
+        run: ls -la
+        working-directory: terraform/homepage
+
       - name: Echo env
         run: ls -la
         working-directory: terraform/homepage/$ENV
