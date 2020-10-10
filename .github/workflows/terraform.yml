@@ -47,7 +47,6 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: terraform/homepage/dev
 
     steps:
     # Conditional steps to set ENV variable based on branch
