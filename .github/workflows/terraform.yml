@@ -13,19 +13,22 @@ jobs:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
         with:
           python-version: 3.8
-      - name: Run image
+      - name: Setup Poetry
         uses: abatilo/actions-poetry@v2.0.0
         with:
           poetry-version: 1.0.10
-      - name: View poetry --help
-        run: |
-          python --version
-          python3 --version
-          poetry --help
-          python3.8 --version
+      - name: Install Poetry venv
+        run: poetry install --no-dev
+      - name: Create HTML Templete
+        run: poetry run python ./homepage_index/make_index.py
+      - uses: actions/upload-artifact@v2
+        with:
+          name: index
+          path: index.html
 
   terraform:
     name: 'Terraform'
