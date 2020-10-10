@@ -1,3 +1,11 @@
+name: 'AWS'
+
+on:
+  push:
+    branches:
+    - develop
+  pull_request:
+
 jobs:
   deploy:
     name: Upload to Amazon S3
