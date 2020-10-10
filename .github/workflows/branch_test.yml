@@ -28,4 +28,4 @@ jobs:
 
       - name: Echo env
         run: ls -la
-        working-directory: terraform/homepage/${{ env.$ENV }}
+        working-directory: terraform/homepage/${{ env.ENV }}
