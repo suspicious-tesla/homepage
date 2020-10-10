@@ -23,4 +23,5 @@ jobs:
         run: echo "ENV=prd" >> $GITHUB_ENV
 
       - name: Echo env
-        run: echo $ENV
+        run: ls -la
+        working-directory: terraform/homepage/$ENV
