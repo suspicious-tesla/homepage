@@ -1,0 +1,27 @@
+name: 'Branc Test'
+
+on:
+  push:
+    branches:
+  pull_request:
+
+jobs:
+  branch_vars:
+    name: 'Test Branch Vars'
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set env to staging
+        if: ! endsWith(github.ref, '/master')
+        run: |
+        echo "ENV=dev" >> $GITHUB_ENV
+      - name: Set env to production
+        if: endsWith(github.ref, '/master')
+        run: |
+        echo "ENV=prd" >> $GITHUB_ENV
+      - name: Echo $ENV
+        if: endsWith(github.ref, '/master')
+        run: |
+        echo $ENV
