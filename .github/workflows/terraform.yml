@@ -51,10 +51,10 @@ jobs:
     steps:
     # Conditional steps to set ENV variable based on branch
     - name: Set env to dev
-      if: "!endsWith(github.ref, '/master')"
+      if: "!endsWith(github.ref, '/main')"
       run: echo "ENV=dev" >> $GITHUB_ENV
     - name: Set env to prd
-      if: endsWith(github.ref, '/master')
+      if: endsWith(github.ref, '/main')
       run: echo "ENV=prd" >> $GITHUB_ENV
   
     # Checkout the repository to the GitHub Actions runner
