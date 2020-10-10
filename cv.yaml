@@ -1,0 +1,19 @@
+name: James Haughey
+accent_color: blue-grey
+avatar_path: /images/avatar.jpg
+title: Infrastructure Engineer
+location: Brighton, UK
+email: jimmyhaugh@googlemail.com
+
+skills:
+  - Terraform
+  - Amazon Web Services
+  - Python
+  - Media
+work experience:
+  - DevOps Engineer:
+    company: EDF Energy
+    dates:
+  - DevOps Engineer:
+    company: EDF Energy
+    dates:
