@@ -1,0 +1,92 @@
+name: 'Terraform'
+
+on:
+  push:
+    branches:
+  pull_request:
+
+jobs:
+  html_template:
+    name: 'Create HTML Template'
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v2
+      # Install the required version of Python
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      # Install the required version of Poetry
+      - name: Setup Poetry
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: 1.0.10
+      # Use Poetry to create a virtual environment and install required packages
+      - name: Install Poetry venv
+        run: poetry install --no-dev
+      # Run the Python script to render the HTML template
+      - name: Create HTML Templete
+        run: poetry run python ./homepage_index/make_index.py
+      # Upload the rendered template as an artifact for use in future steps
+      - uses: actions/upload-artifact@v2
+        with:
+          name: index
+          path: index.html
+
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    container:
+        image: alpine/terragrunt:latest
+    # Wait for html_template job to run so that artifact is ready
+    needs: html_template
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Conditional steps to set ENV variable based on branch
+    - name: Set env to dev
+      if: "!endsWith(github.ref, '/master')"
+      run: echo "ENV=dev" >> $GITHUB_ENV
+    - name: Set env to prd
+      if: endsWith(github.ref, '/master')
+      run: echo "ENV=prd" >> $GITHUB_ENV
+  
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+    # Download index.html artifact from Python job
+    - name: Download index.html
+      uses: actions/download-artifact@v2
+      with:
+        name: index
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terragrunt init
+      working-directory: terraform/homepage/${{ env.ENV }}
+
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan
+      run: terragrunt plan
+      working-directory: terraform/homepage/${{ env.ENV }}
+
+      # On push to main, build or change infrastructure according to Terraform configuration files
+      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+    - name: Terraform Apply
+      if: (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main') && github.event_name == 'push'
+      run: terragrunt apply -auto-approve
+      working-directory: terraform/homepage/${{ env.ENV }}
