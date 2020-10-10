@@ -7,6 +7,17 @@ on:
   pull_request:
 
 jobs:
+  html_template:
+    name: 'Create HTML Template'
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python venv
+        run: |
+          python --version
+
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
