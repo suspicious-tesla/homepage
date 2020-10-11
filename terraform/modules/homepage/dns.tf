@@ -5,7 +5,7 @@ data "aws_route53_zone" "domain" {
 
 resource "aws_route53_record" "homepage" {
   zone_id = data.aws_route53_zone.domain.zone_id
-  name    = "dev.${data.aws_route53_zone.domain.name}"
+  name    = local.homepage_url
   type    = "A"
 
   alias {

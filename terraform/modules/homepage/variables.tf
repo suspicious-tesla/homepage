@@ -14,13 +14,13 @@ variable "environment" {
   type        = string
 }
 
-variable "homepage_url" {
-  description = "The url to deploy the homepage to"
+variable "domain_name" {
+  description = "The domain of the url to deploy the homepage to"
   type        = string
 }
 
-variable "domain_name" {
-  description = "The url to deploy the homepage to"
+variable "sub_domain" {
+  description = "The subdomain of the url to deploy the homepage to"
   type        = string
 }
 

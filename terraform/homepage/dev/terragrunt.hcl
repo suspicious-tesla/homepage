@@ -27,7 +27,7 @@ inputs = {
   project        = local.project
   stack          = local.stack
   environment    = "dev"
-  homepage_url   = "dev.jameshaughey.net"
   domain_name    = local.common_vars.locals.domain_name
+  sub_domain     = "dev."
   terragrunt_dir = get_terragrunt_dir()
 }
