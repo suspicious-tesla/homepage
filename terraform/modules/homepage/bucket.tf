@@ -1,5 +1,7 @@
 locals {
   project_root       = "${var.terragrunt_dir}/../../.."
+  
+  homepage_url       = "${var.sub_domain}${var.domain_name}"
   index              = "index.html"
   error              = "error.html"
   avatar             = "avatar.jpg"
@@ -8,7 +10,7 @@ locals {
 }
 
 resource "aws_s3_bucket" "homepage" {
-  bucket = var.homepage_url
+  bucket = local.homepage_url
   acl    = "public-read"
 
   website {
