@@ -9,11 +9,22 @@ skills:
   - Terraform
   - Amazon Web Services
   - Python
-  - Media
-work experience:
-  - DevOps Engineer:
+  - Jenkins
+certifications:
+  - title: AWS Developer Associate 
+    certifier: Amazon Web Services
+  - title: Data Scientist with Python
+    certifier: Datacamp
+  - title: Fundamental of Red Hat Enterprise Linux
+    certifier: EdX
+work_experience:
+  - title: DevOps Engineer
     company: EDF Energy
-    dates:
-  - DevOps Engineer:
+    start_date: Mar 2020
+    end_date: Current
+    description: stuff
+  - title: Senior Quants Developer
     company: EDF Energy
-    dates:
+    start_date: Mar 2020
+    end_date: May 2019
+    description: I was seconded to the Quantitive Development team working on wholesale energy markets. My main focus during this placement was developing a Python based data processing application for calculating a per customer view of energy and non-energy costs. This project delivered licences savings of >£100k per year by moving to an open source solution. In addition the average calculation time was reduced from 4 hour to 10 minutes allowing many more cost updates to be ran per week. The flexibility of the application was greatly increased allowing it to be used within an additional market.
